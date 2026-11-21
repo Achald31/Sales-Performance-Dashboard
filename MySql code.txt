@@ -1,0 +1,64 @@
+
+CREATE DATABASE Sales_Analysis;
+USE Sales_Analysis;
+
+-- 1. View Data
+SELECT * FROM orders;
+
+-- 2. Total Sales
+SELECT SUM(Sales) AS Total_Sales FROM orders;
+
+-- 3. Total Profit
+SELECT SUM(Profit) AS Total_Profit FROM orders;
+
+-- 4. Total Orders
+SELECT COUNT(DISTINCT Order_ID) AS Total_Orders FROM orders;
+
+-- 5. Total Customers
+SELECT COUNT(DISTINCT Customer_ID) AS Total_Customers FROM orders;
+
+-- 6. Average Sales
+SELECT AVG(Sales) AS Average_Sales FROM orders;
+
+-- 7. Profit Margin
+SELECT SUM(Profit)/SUM(Sales)*100 AS Profit_Margin FROM orders;
+
+-- 8. Sales by Category
+SELECT Category, SUM(Sales)
+FROM orders GROUP BY Category;
+
+-- 9. Sales by Region
+SELECT Region, SUM(Sales)
+FROM orders GROUP BY Region;
+
+-- 10. Sales by Segment
+SELECT Segment, SUM(Sales)
+FROM orders GROUP BY Segment;
+
+-- 11. Profit by State
+SELECT State, SUM(Profit)
+FROM orders GROUP BY State;
+
+-- 12. Top 10 Customers
+SELECT Customer_Name, SUM(Sales) AS Total_Sales
+FROM orders
+GROUP BY Customer_Name
+ORDER BY Total_Sales DESC LIMIT 10;
+
+-- 13. Top 10 Products
+SELECT Product_Name, SUM(Sales) AS Total_Sales
+FROM orders
+GROUP BY Product_Name
+ORDER BY Total_Sales DESC LIMIT 10;
+
+-- 14. Monthly Sales Trend
+SELECT YEAR(Order_Date), MONTH(Order_Date),
+SUM(Sales) AS Monthly_Sales
+FROM orders
+GROUP BY YEAR(Order_Date), MONTH(Order_Date)
+ORDER BY YEAR(Order_Date), MONTH(Order_Date);
+
+-- 15. Delivery Time
+SELECT AVG(DATEDIFF(Ship_Date, Order_Date))
+AS Average_Delivery_Days
+FROM orders;
